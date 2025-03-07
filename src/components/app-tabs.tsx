@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DashboardTab } from "@/components/tabs/dashboard-tab";
 import { EnhancedDashboardTab } from "@/components/tabs/enhanced-dashboard-tab";
-import { KeywordPerformanceTab } from "@/components/tabs/keyword-performance-tab";
-import { CompetitiveAnalysisTab } from "@/components/tabs/competitive-analysis-tab";
-import { AppReviewsTab } from "@/components/tabs/app-reviews-tab";
-import { RankingsTab } from "@/components/tabs/rankings-tab";
-import { DownloadsTab } from "@/components/tabs/downloads-tab";
+import { 
+  KeywordPerformanceTab, 
+  CompetitiveAnalysisTab, 
+  AppReviewsTab, 
+  RankingsTab, 
+  DownloadsTab 
+} from "@/components/tabs/placeholder-tabs";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 
