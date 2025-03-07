@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   AreaChart,
   Area,
@@ -42,7 +42,7 @@ export function InteractiveChart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [highlightedSeries, setHighlightedSeries] = useState<string | null>(null);
 
-  const handleMouseEnter = useCallback((_, index: number) => {
+  const handleMouseEnter = useCallback((event: React.MouseEvent, index: number) => {
     setActiveIndex(index);
   }, []);
 
@@ -50,7 +50,13 @@ export function InteractiveChart({
     setActiveIndex(null);
   }, []);
 
-  const handleLegendMouseEnter = useCallback((entry: any) => {
+  interface LegendEntry {
+    dataKey: string;
+    value: string;
+    color: string;
+  }
+
+  const handleLegendMouseEnter = useCallback((entry: LegendEntry) => {
     setHighlightedSeries(entry.dataKey);
   }, []);
 
@@ -59,7 +65,7 @@ export function InteractiveChart({
   }, []);
 
   const handleClick = useCallback(
-    (_, __, index: number) => {
+    (event: React.MouseEvent, payload: unknown, index: number) => {
       if (onPointClick && data[index]) {
         onPointClick(data[index]);
       }
@@ -72,13 +78,23 @@ export function InteractiveChart({
     return highlightedSeries === dataKey ? 1 : 0.3;
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  interface TooltipProps {
+    active?: boolean;
+    payload?: Array<{
+      name: string;
+      value: number | string;
+      color: string;
+    }>;
+    label?: string;
+  }
+
+  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-background border rounded-md shadow-md p-3">
           <p className="font-medium">{label}</p>
           <div className="mt-2">
-            {payload.map((entry: any, index: number) => (
+            {payload.map((entry, index: number) => (
               <div key={`tooltip-${index}`} className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
